@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './index.scss';
-import Home from '../Home'
-import Error from '../Error'
+
+import Home from '../Home';
+import Error from '../Error';
+import Author from "../Author";
 
 class App extends Component {
+
     render() {
         return (
-            <BrowserRouter>
+            <Router>
                 <Switch>
-                    <Route path="/" component={Home} exact/>
+                    <Route exact path="/" component={Home} />
+                    <Route path="/authors/:id" component={Author}/>
                     <Route component={Error}/>
                 </Switch>
-            </BrowserRouter>
+            </Router>
         )
     }
 }

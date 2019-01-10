@@ -40,6 +40,18 @@
   margin-right: -250px;
 }
 
+.next-btn {
+  position: fixed;
+  right: 2%;
+  top: 12%;
+}
+
+.prev-btn {
+  position: fixed;
+  right: 2%;
+  top: 20%;
+}
+
 @media(min-width:768px) {
   .wrapper {
     padding-left: 0;
