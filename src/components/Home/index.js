@@ -53,6 +53,7 @@ class Home extends Component {
         const publicationList = publications ? this.publicationListTemplate() : '';
         const nextButton = next ? this.nextButtonTemplate() : '';
         const prevButton = prev ? this.prevButtonTemplate() : '';
+        const reverseButton = publications ? this.reverseButtonTemplate() : '';
 
         return (
             <div className="App wrapper toggled">
@@ -65,18 +66,19 @@ class Home extends Component {
                             <div className="input-group mb-3">
                                 <input type="text" className="form-control" placeholder="Search by publication's name"
                                        aria-label="Recipient's username" aria-describedby="button-addon2"
-                                       id="input-search" onKeyPress={this.handleSearchByEnter.bind(this)}
+                                       id="input-search" onKeyPress={this.handleSearchByEnter}
                                 />
                                 <div className="input-group-append">
-                                    <button onClick={this.handleSearch.bind(this)} className="btn btn-outline-primary" type="button" id="button-addon2">
+                                    <button onClick={this.handleSearch} className="btn btn-outline-primary" type="button" id="button-addon2">
                                         Search
                                     </button>
                                 </div>
                             </div>
                         </div>
                         <div className="row justify-content-center">
-                            { prevButton }
+                            { reverseButton }
                             { publicationList }
+                            { prevButton }
                             { nextButton }
                         </div>
                     </div>
@@ -91,7 +93,7 @@ class Home extends Component {
 
     nextButtonTemplate() {
         return (
-            <a href={this.state.next} className={"btn btn-primary next-btn"} onClick={this.handleClick.bind(this)}>
+            <a href={this.state.next} className={"btn btn-primary next-btn"} onClick={this.handleClick}>
                 Next
             </a>
         )
@@ -99,21 +101,29 @@ class Home extends Component {
 
     prevButtonTemplate() {
         return (
-            <a href={this.state.prev} className={"btn btn-primary prev-btn"} onClick={this.handleClick.bind(this)}>
+            <a href={this.state.prev} className={"btn btn-primary prev-btn"} onClick={this.handleClick}>
                 Prev
             </a>
         )
     }
 
-    handleClick(e) {
+    reverseButtonTemplate() {
+        return (
+            <button className={"btn btn-primary reverse-btn"} onClick={this.handleReverse}>
+                Reverse
+            </button>
+        )
+    }
+
+    handleClick = e => {
         e.preventDefault();
         RequestService.get(e.target.href)
             .then(({ response, json }) => {
                 this.parseLinkAndSetState(response, json);
             })
-    }
+    };
 
-    handleSearch(e) {
+    handleSearch = e => {
         e.preventDefault();
         const input = document.querySelector('#input-search');
         const publications_url = `${Home.api_url}/publications?q=${input.value}`;
@@ -122,13 +132,19 @@ class Home extends Component {
             .then(({ response, json }) => {
                 this.parseLinkAndSetState(response, json);
             })
-    }
+    };
 
-    handleSearchByEnter(e) {
+    handleSearchByEnter = e => {
         console.log(e.key, e);
         if (e.key === 'Enter') {
             this.handleSearch(e)
         }
+    };
+
+    handleReverse = () => {
+        this.setState({
+            publications: this.state.publications.reverse()
+        })
     }
 }
 

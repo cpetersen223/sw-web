@@ -40,16 +40,22 @@
   margin-right: -250px;
 }
 
-.next-btn {
+.reverse-btn {
   position: fixed;
   right: 2%;
   top: 12%;
 }
 
-.prev-btn {
+.next-btn {
   position: fixed;
   right: 2%;
   top: 20%;
+}
+
+.prev-btn {
+  position: fixed;
+  right: 2%;
+  top: 28%;
 }
 
 @media(min-width:768px) {

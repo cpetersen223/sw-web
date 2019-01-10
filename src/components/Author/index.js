@@ -42,6 +42,7 @@ class Author extends Component {
 
     template() {
         const { name, email, birth_date, publications } = this.state.author;
+        const reverseButton = publications ? this.reverseButtonTemplate() : '';
 
         return (
             <Fragment>
@@ -51,9 +52,25 @@ class Author extends Component {
                 <div className="row justify-content-center">
                     <PublicationList publications={publications}/>
                 </div>
+                { reverseButton }
             </Fragment>
         )
     }
+
+    reverseButtonTemplate() {
+        return (
+            <button className={"btn btn-primary reverse-btn"} onClick={this.handleReverse}>
+                Reverse
+            </button>
+        )
+    }
+
+    handleReverse = () => {
+        this.setState({
+            publications: this.state.author.publications.reverse()
+        })
+    }
+
 }
 
 export default Author;
